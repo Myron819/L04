@@ -6,6 +6,8 @@
  * @flow strict-local
  */
 
+import mt from 'moment-timezone';
+import m from 'moment';
 import React from 'react';
 import {
   SafeAreaView,
@@ -25,7 +27,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 const Welcome = () => {
-  return <Text>Welcome</Text>;
+  return <Text>Welcome to C308 Web Frameworks!</Text>;
 };
 
 class MyFirstApp extends React.Component {
@@ -34,19 +36,46 @@ class MyFirstApp extends React.Component {
   }
 }
 
-const SemModule = (props) => {
+const ModulesHeader = () => {
+  return <Text>{'\n'}My modules this semester:</Text>;
+};
 
+const SemModule = (props) => {
   return (
     <Text>
       {props.day} - {props.modCode}
     </Text>
   );
+};
+
+const EatsHeader = () => {
+  return <Text>{'\n'}Recommended Eats @ RP</Text>;
+};
+
+class Eats extends React.Component {
+  render(): React$Node {
+    return (
+      <Text>
+        {this.props.name} {'\n'}
+        {this.props.location} {'\n'}
+      </Text>
+    );
+  }
 }
 
-
+class Clock extends React.Component {
+  render() {
+    var now = m().format('YYYY-MM-DD HH:mm');
+    var sg = mt.tz(now, 'Asia/Singapore').format('HH:mm ZZ');
+    var ln = mt.tz(now, 'Europe/London').format('HH:mm ZZ');
+    var ny = mt.tz(now, 'America/New_York').format('HH:mm ZZ');
+    var os = mt.tz(now, 'Europe/Oslo').format('HH:mm ZZ');
+    return <Text>World Clock{'\n'}Asia/Singapore - {sg}{'\n'}Europe/London - {ln}{'\n'}America/New_York - {ny}{'\n'}Europe/Oslo - {os}{'\n'}</Text>;
+  }
+}
 
 const App: () => React$Node = () => {
-  console.log("I'm a console statement!");
+  console.log('Listing semester modules and recommended eats');
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -65,10 +94,19 @@ const App: () => React$Node = () => {
 
               <Welcome />
               <MyFirstApp />
+
+              <ModulesHeader />
               <SemModule day="Monday" modCode="C273" />
-              <SemModule day="Thursday" modCode="C208" />
+              <SemModule day="Tuesday" modCode="C208" />
+              <SemModule day="Thursday" modCode="C348" />
 
+              <EatsHeader />
+              <Eats name="Sweet tooth Waffles" location="W6 Level 1, E-canteen" />
+              <Eats name="Crowded Bowl" location="W4/W6 Lawn Canteen" />
+              <Eats name="Western Cuisine @ Koufu" location="E1 Level 1, Koufu" />
+              <Eats name="Ayam Penyet" location="W4/W6 Lawn Canteen" />
 
+              <Clock />
             </View>
           </View>
         </ScrollView>
